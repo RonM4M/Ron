@@ -1,63 +1,60 @@
-bank ={"John":14000,"Ron":15000}
-print("Bank. We Judge you")
+bank ={1234:{"name":"John","balance":14000},3333:{"name":"Ron","balance":15000}}
+print("Bank")
 while(True):
     print('''\t1.Create an account\n\t2.Check Balance\n\t3.Deposit Money\n\t4.Withdraw money\n\t5.Exit''')
     choice = int(input("Enter your choice(1/2/3/4/5): "))
     if choice ==  1:
         name = input("Enter name: ")
+        pin1 = int(input("Enter 4 digit pin: "))
         dep = int(input("Enter deposit amount: "))
-        bank[name] = dep
-        print("Account created. Here comes tax, 0 is our limit. Enjoy")
+        bank[pin1] = {"name":name,"balance":dep}
+        print("Account created")
         print(bank)
     elif choice == 2:
-        name = input("Enter name (first letter capital): ")
-        flag=1
+        name = input("Enter name(first letter capital): ")
         for key in bank:
-            if name.lower() == key.lower():
+            if bank[key]["name"].lower() == name.lower():
                 print("Account found")
-                print("Balance: ",bank[name])
-                flag=1
-                break
+                pin = int(input("Enter pin: "))
+                if(key == pin):
+                    print("Balance: ",bank[key]["balance"])
+                else:
+                    print("Incorrect")
             else:
-                flag=0
-        if flag == 0:
-            print("Not a customer here. We still judge you.")
+                pass
+       
     elif choice == 3:
-        name = input("Enter name: ")
-        flag=1
+        name = input("Enter name(first letter capital): ")
         for key in bank:
-            if name == key:
-                print("Account found ; Current Balance: ",bank[name])
-                todep=int(input("Enter amount to deposit: "))
-                bank[name]+=todep
-                print(bank)
-                print("Deposit complete. Here comes more tax.")
-                flag=1
-                break
+            if bank[key]["name"].lower() == name.lower():
+                print("Account found")
+                pin = int(input("Enter pin: "))
+                if(pin == key):
+                    dep=float(input("Enter amount to deposit: "))
+                    bank[key]["balance"]+=dep
+                else:
+                    break
             else:
-                flag=0
-        if flag == 0:
-            print("Not a customer here. ")
+                pass
 
     elif choice == 4:
         name = input("Enter name: ")
-        flag=1
         for key in bank:
-            if name == key:
-                print("Account found : Current Balance: ",bank[name])
-                withdep=int(input("Enter amount to withdraw if you have any left: "))
-                if bank[name] < withdep:
-                    print("Insufficient balance / Broke")
+            if name == bank[key]["name"]:
+                print("Account found")
+                pin = int(input("Enter pin: "))
+                if(pin == key):
+                    print("Current balance: ",bank[key]["balance"])
+                    withdep=int(input("Enter amount to withdraw: "))
+                    if bank[key]["balance"] < withdep:
+                        print("Insufficient balance")
+                    else:
+                        bank[key]["balance"]-=withdep
+                        print("Withdrawn. Remaining balance: ",bank[key]["balance"])
                 else:
-                    bank[name]-=withdep
-                    print("Withdrawn. You will be less taxed.")
-                    print(bank)
-                flag=1
-                break
+                    print("Incorrect")
             else:
-                flag=0
-        if flag == 0:
-            print("Not a customer here. ")
+                pass
     elif choice == 5:
         break
     else:
