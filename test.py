@@ -1,7 +1,24 @@
-bank ={1234:{"name":"John","balance":14000},3333:{"name":"Ron","balance":15000}}
+#To associate pin to user details,using {}
+def load_data():  
+    bank ={}
+    with open("bank.txt","r") as f:
+        for line in f:
+            pin,name,balance=line.strip().split(",")
+            bank[int(pin)]={"name":name,"balance":balance}
+#To write latest data into txt from {}
+def add_data(bank):
+    with open("bank.txt","w") as f:
+        for pin,data in bank.items:
+            f.write(f"{pin},{data['name']},{data['balance']}\n")
+            
+                   
 print("Bank")
+
+
+#To be modified
 while(True):
-    print('''\t1.Create an account\n\t2.Check Balance\n\t3.Deposit Money\n\t4.Withdraw money\n\t5.Exit''')
+    bank=load_data()
+    print("\t1.Create an account\n\t2.Check Balance\n\t3.Deposit Money\n\t4.Withdraw money\n\t5.Exit")
     choice = int(input("Enter your choice(1/2/3/4/5): "))
     if choice ==  1:
         name = input("Enter name: ")
